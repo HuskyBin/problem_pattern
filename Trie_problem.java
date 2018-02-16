@@ -18,10 +18,11 @@ class Trie {
                 return;
             }
             char curChar = word.charAt(index);
-            if (children[curChar - 'a'] == null) {
-                children[curChar - 'a'] = new TrieNode();
+            int pos = curChar - 'a';
+            if (children[pos] == null) {
+                children[pos] = new TrieNode();
             }
-            children[curChar - 'a'].insert(word, index + 1);
+            children[pos].insert(word, index + 1);
         }
         
         public TrieNode find(String word, int index) {
