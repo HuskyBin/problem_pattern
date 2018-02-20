@@ -1,0 +1,50 @@
+class UnionFind {
+        private int[] parent;
+        private int[] size;
+        //表示最后有多少个不连接的conponent
+        private int count = 0;
+        
+        public UnionFind(int n) {
+            count = n;
+            parent = new int[n];
+            size = new int[n];
+            for (int i = 0; i < n; i++) {
+                parent[i] = i;
+                size[i] = 1;
+            }
+            
+        }
+        
+        public int find(int p) {
+            while(parent[p] != p) {
+                parent[p] = parent[parent[p]];
+                p = parent[p];
+            }
+            return p;
+        }
+        
+        public void union(int p, int q) {
+            int rootP = find(p);
+            int rootQ = find(q);
+            
+            if (rootP == rootQ) {
+                return;
+            }
+            
+            if (size[rootP] >= size[rootQ]) {
+                parent[rootQ] = rootP;
+                size[rootP] += size[rootQ];
+            }
+            else {
+                parent[rootQ] = rootP;
+                size[rootQ] += size[rootP];
+            }
+            count--;
+        }
+         
+        private int count() {
+            return this.count;
+        }
+        
+        
+    }
