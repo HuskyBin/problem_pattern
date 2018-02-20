@@ -13,6 +13,17 @@ private class UnionFind {
             }
         }
         
+        //递归path compresion
+        public int find(int p) {
+           if (parent[p] == p) {
+               return p;
+           } else {
+               parent[p] = find(parent[p]);
+               return parent[p];
+           }
+        }
+        
+        // 迭代的path compression
         public int find(int p) {
             while (parent[p] != p) {
                 parent[p] = parent[parent[p]];
