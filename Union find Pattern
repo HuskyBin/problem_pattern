@@ -1,50 +1,40 @@
-class UnionFind {
+private class UnionFind {
         private int[] parent;
-        private int[] size;
-        //表示最后有多少个不连接的conponent
-        private int count = 0;
+        //树的高度
+        private int[] rank;
         
         public UnionFind(int n) {
-            count = n;
-            parent = new int[n];
-            size = new int[n];
-            for (int i = 0; i < n; i++) {
-                parent[i] = i;
-                size[i] = 1;
-            }
+            parent = new int[n + 1];
+            rank = new int[n + 1];
             
+            for (int i = 0; i <= n; i++) {
+                parent[i] = i;
+                rank[i] = 1;
+            }
         }
         
         public int find(int p) {
-            while(parent[p] != p) {
+            while (parent[p] != p) {
                 parent[p] = parent[parent[p]];
                 p = parent[p];
             }
             return p;
         }
         
-        public void union(int p, int q) {
-            int rootP = find(p);
-            int rootQ = find(q);
-            
-            if (rootP == rootQ) {
+        public void uion(int p, int q) {
+            int rootp = find(p);
+            int rootq = find(q);
+            if (rootp == rootq) {
                 return;
             }
-            
-            if (size[rootP] >= size[rootQ]) {
-                parent[rootQ] = rootP;
-                size[rootP] += size[rootQ];
+            if (rank[rootp] > rank[rootq]) {
+                parent[rootq] = rootp;
+            } else {
+                parent[rootp] = parent[rootq];
+                // 只有当相等时候才高度加1
+                if (rank[rootp] == rank[rootq]) {
+                    rank[rootq]++;
+                }
             }
-            else {
-                parent[rootQ] = rootP;
-                size[rootQ] += size[rootP];
-            }
-            count--;
         }
-         
-        private int count() {
-            return this.count;
-        }
-        
-        
     }
