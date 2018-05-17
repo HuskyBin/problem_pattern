@@ -82,9 +82,7 @@ class Trie {
         TrieNode pNode = root;
         for (int i = 0; i < word.length(); i++) {
             char pos = word.charAt(i);
-            if (!pNode.children.containsKey(pos)) {
-                pNode.children.put(pos, new TrieNode());
-            }
+            pNode.children.putIfAbsent(pos, new TrieNode());
             pNode = pNode.children.get(pos);
         }
         pNode.isWord = true;
