@@ -45,3 +45,43 @@ class Solution {
         return numCourses == number;
     }
 }
+
+// DFS
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        if (prerequisites == null) {
+            return new int[0];
+        }
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        for (int[] rule : prerequisites) {
+            graph.computeIfAbsent(rule[1], k -> new ArrayList<>()).add(rule[0]);
+        }
+        int[] visited = new int[numCourses];
+        List<Integer> results = new ArrayList<>();
+        for (int i = 0; i < numCourses; i++) {
+            if (!canFinishDFS(graph, visited, i, results)) {
+                return new int[0];
+            }
+        }
+        Collections.reverse(results);
+        return results.stream().mapToInt(i -> i).toArray();
+    }
+    
+    private boolean canFinishDFS(Map<Integer, List<Integer>> graph, int[] visited, int node, List<Integer> results) {
+        if (visited[node] == -1) {
+            return false;
+        }    
+        if (visited[node] == 1) {
+            return true;
+        }
+        visited[node] = -1;
+        for (int neighbor : graph.getOrDefault(node, new ArrayList<>())) {
+            if (!canFinishDFS(graph, visited, neighbor, results)) {
+                return false;
+            }
+        }
+        results.add(node);
+        visited[node] = 1;
+        return true;
+    }
+}
