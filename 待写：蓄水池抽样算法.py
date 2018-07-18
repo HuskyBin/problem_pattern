@@ -1,5 +1,5 @@
 很容易能够想到这样一个简单的式子来凑出1/n：
-
+     i选中    后面都选不中
 pi=  1/i  ×  (i/i+1)   ×   (i+1)/(i+2)   ×⋯×(n−1)/n   =   1/n
 class RandomSelector:
   def __init__(self, rand=None):
