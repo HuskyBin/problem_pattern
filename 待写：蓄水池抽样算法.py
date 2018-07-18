@@ -1,10 +1,6 @@
 很容易能够想到这样一个简单的式子来凑出1/n：
 
-
-
-
-pi=1/i×ii+1×i+1i+2×⋯×n−1n=1n
-
+pi=  1/i  ×  (i/i+1)   ×   (i+1)/(i+2)   ×⋯×(n−1)/n   =   1/n
 class RandomSelector:
   def __init__(self, rand=None):
     self._selectedItem = None
