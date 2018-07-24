@@ -13,7 +13,7 @@ private class UnionFind {
             }
         }
         
-        //递归path compresion
+        //递归path compresion 更好
         public int find(int p) {
            if (parent[p] == p) {
                return p;
@@ -21,6 +21,13 @@ private class UnionFind {
                parent[p] = find(parent[p]);
                return parent[p];
            }
+        }
+        
+        public int find(int i) { // path compression
+            if (parent[i] != i) {
+                parent[i] = find(parent[i])
+            };  
+            return parent[i];
         }
         
         // 迭代的path compression
@@ -49,3 +56,5 @@ private class UnionFind {
             }
         }
     }
+
+
