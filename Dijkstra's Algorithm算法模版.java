@@ -42,3 +42,46 @@ class Solution {
 
     
 }
+
+
+// visited pattern
+class Solution {
+    public int reachableNodes(int[][] edges, int M, int N) {
+        if (edges == null || edges.length == 0) {
+            return 0;
+        }
+        int[][] graph = new int[N][N];
+        for (int[] g : graph) {
+            Arrays.fill(g, -1);
+        }
+        for (int[] edge : edges) {
+            graph[edge[0]][edge[1]] = edge[2];
+            graph[edge[1]][edge[0]] = edge[2];
+        }
+        
+        PriorityQueue<int[]> heap = new PriorityQueue<>((a, b) -> b[1] - a[1]);
+        heap.add(new int[]{0, M});
+        Set<Integer> visited = new HashSet<>();
+        int result = 0;
+        while (!heap.isEmpty()) {
+            int[] curNode = heap.poll();
+            int node = curNode[0];
+            int moves = curNode[1];
+            if (visited.contains(node)) {
+                continue;
+            }
+            visited.add(node);
+            result++;
+            for (int i = 0; i < N; i++) {
+                if (graph[node][i] >= 0) {
+                    if (moves - graph[node][i] - 1 >= 0 && !visited.contains(i)) {
+                        heap.offer(new int[]{i, moves - graph[node][i] - 1});
+                    }
+                    result += Math.min(moves, graph[node][i]);
+                    graph[i][node] -= Math.min(moves, graph[node][i]);
+                }
+            }
+        }
+        return result;
+    }
+}
