@@ -45,6 +45,7 @@ class Solution {
 
 
 // visited pattern
+// 886. Reachable Nodes In Subdivided Graph
 class Solution {
     public int reachableNodes(int[][] edges, int M, int N) {
         if (edges == null || edges.length == 0) {
