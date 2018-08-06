@@ -1,7 +1,6 @@
 // 先借用leetcode 743 的答案
 // 但是包含了所有的精髓
 class Solution {
-    private int visitedCount = 0;
     public int networkDelayTime(int[][] times, int N, int K) {
         if (times == null) {
             return 0;
