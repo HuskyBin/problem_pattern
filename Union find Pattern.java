@@ -51,7 +51,7 @@ private class UnionFind {
                 parent[rootp] = parent[rootq];
                 // 只有当相等时候才高度加1
                 if (rank[rootp] == rank[rootq]) {
-                    rank[rootq]++;
+                    rank[rootp]++;
                 }
             }
         }
