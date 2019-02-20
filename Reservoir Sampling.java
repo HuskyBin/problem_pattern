@@ -12,3 +12,20 @@ public int[] shuffle() {
      }
      return num;
 }   
+
+// stream流中的平等样本抽取算法
+
+public int pick(int target) {
+    int total = 0;
+    int res = 0;
+    for (int i = 0; i < nums.length; i++) {
+       if (nums[i] == target) {
+            total++;
+            int ran = random.nextInt(total);
+            if (ran == 0) {
+                res = i;
+            }
+        }
+    }
+    return res;
+}
