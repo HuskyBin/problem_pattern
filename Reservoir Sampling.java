@@ -14,6 +14,10 @@ public int[] shuffle() {
 }   
 
 // stream流中的平等样本抽取算法
+// 第一个 1 
+// 第二个 1 / 2
+// 第三个   1/2 * 2/3
+// 第四个 1/2*2/3*3/4
 
 public int pick(int target) {
     int total = 0;
