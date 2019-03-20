@@ -1,4 +1,4 @@
-//https://leetcode.com/problems/minimum-window-substring/discuss/26808/Here-is-a-10-line-template-that-can-solve-most-'substring'-problems
+//https://leetcode.com/problems/longest-substring-with-at-most-two-distinct-characters/discuss/49708/Sliding-Window-algorithm-template-to-solve-all-the-Leetcode-substring-search-problem.
 public class Solution {
     public List<Integer> slidingWindowTemplateByHarryChaoyangHe(String s, String t) {
         //init a collection or int value to save the result according the question.
@@ -47,5 +47,30 @@ public class Solution {
             }
         }
         return result;
+    }
+}
+
+// 159
+class Solution {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+        if (s == null) {
+            return 0;
+        }
+        int res = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        int start = 0;
+        for (int end = 0; end < s.length(); end++) {
+            char curChar = s.charAt(end);
+            map.put(curChar, map.getOrDefault(curChar, 0) + 1);
+            while (map.size() > 2) {
+                map.put(s.charAt(start), map.get(s.charAt(start)) - 1);
+                if (map.get(s.charAt(start)) == 0) {
+                    map.remove(s.charAt(start));
+                }
+                start++;
+            }
+            res = Math.max(res, end - start + 1);
+        }
+        return res;
     }
 }
