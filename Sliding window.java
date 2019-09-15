@@ -269,3 +269,61 @@ public class Solution {
         return result;
     }
 }
+
+
+Longest Substring with At Most K Distinct Characters
+https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters
+
+    public int lengthOfLongestSubstringKDistinct(String s, int k) {
+        if (s == null || s.isEmpty()) return 0;
+        int maxLen = 0, left = 0, right = 0, counter = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        while(right < s.length()) {
+        	char ch = s.charAt(right++);
+        	map.put(ch, map.getOrDefault(ch, 0) + 1);
+        	if (map.size() > k) counter++;
+        	while(counter > 0) {
+        		char tmp = s.charAt(left);
+        		map.put(tmp, map.get(tmp) - 1);
+        		if (map.get(tmp) == 0) {
+        			map.remove(tmp);
+        			counter--;
+        		}
+        		left++;
+        	}
+        	maxLen = Math.max(maxLen, right - left);
+        	
+        }
+        return maxLen;        
+    }
+Longest Repeating Character Replacement
+https://leetcode.com/problems/longest-repeating-character-replacement
+
+    public int characterReplacement(String s, int k) {
+    	if (s == null || s.isEmpty()) return 0;
+    	int left = 0, right = 0, counter = 0, res = 0;
+    	Map<Character, Integer> map = new HashMap<>();
+    	while(right < s.length()) {
+    		char ch = s.charAt(right++);
+    		map.put(ch, map.getOrDefault(ch, 0) + 1);
+    		if (counter < map.get(ch)) counter = map.get(ch);
+    		// check how many chars to "flip" by looking at the delta between the
+    		// length of the string and the highest frequency char. If <= k, no problem. Otherwise, move window
+    		while(!(right - left - counter <= k)) { // apply De Morgan and make it right - left - counter > k
+    			char tmp = s.charAt(left);
+    			map.put(tmp, map.get(tmp) - 1);
+    			counter = getMax(map);
+    			left++;
+    		}
+    		res = Math.max(res, right - left);
+    	}    	
+    	return res;
+    }
+    
+    private int getMax(Map<Character, Integer> map) {
+		int max = 0;
+		for(int freq : map.values()) {
+			max = Math.max(max, freq);
+		}
+		return max;
+    }
