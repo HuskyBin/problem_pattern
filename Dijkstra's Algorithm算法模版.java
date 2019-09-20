@@ -57,14 +57,10 @@ public:
         dist[K] = 0;
         for (auto e : times) edges[e[0]][e[1]] = e[2];
         while (!q.empty()) {
-            unordered_set<int> visited;
             int u = q.front(); q.pop();
             for (int v = 1; v <= 100; ++v) {
                 if (edges[u][v] != -1 && dist[u] + edges[u][v] < dist[v]) {
-                    if (!visited.count(v)) {
-                        visited.insert(v);
-                        q.push(v);
-                    }
+                    q.push(v);
                     dist[v] = dist[u] + edges[u][v];
                 }
             }
