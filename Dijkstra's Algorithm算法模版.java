@@ -43,6 +43,39 @@ class Solution {
     
 }
 
+//其实用Queue也是可以实现Dijstra算法的不过复杂度是V的平方，用PriorityQueue的复杂度是(E + V)LogV
+// Adding these running times together, we have O(|E|log|V|) for all priority value updates and O(|V|log|V|) for
+//     removing all vertices (there are also some other O(|E|) and O(|V|) additive terms, but they are dominated by these two terms). 
+//     This means the running time for Dijkstra's algorithm using a binary min-heap as a priority queue is O((|E|+|V|)log|V|).
+class Solution {
+public:
+    int networkDelayTime(vector<vector<int>>& times, int N, int K) {
+        int res = 0;
+        vector<vector<int>> edges(101, vector<int>(101, -1));
+        queue<int> q{{K}};
+        vector<int> dist(N + 1, INT_MAX);
+        dist[K] = 0;
+        for (auto e : times) edges[e[0]][e[1]] = e[2];
+        while (!q.empty()) {
+            unordered_set<int> visited;
+            int u = q.front(); q.pop();
+            for (int v = 1; v <= 100; ++v) {
+                if (edges[u][v] != -1 && dist[u] + edges[u][v] < dist[v]) {
+                    if (!visited.count(v)) {
+                        visited.insert(v);
+                        q.push(v);
+                    }
+                    dist[v] = dist[u] + edges[u][v];
+                }
+            }
+        }
+        for (int i = 1; i <= N; ++i) {
+            res = max(res, dist[i]);
+        }
+        return res == INT_MAX ? -1 : res;
+    }
+};
+
 
 // visited pattern
 // 886. Reachable Nodes In Subdivided Graph
