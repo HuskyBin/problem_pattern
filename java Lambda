@@ -1,0 +1,6 @@
+T 是string
+Character[] result = T.chars().mapToObj(i -> (char) i).sorted((a, b) -> 
+            orderIndex[a - 'a'] - orderIndex[b - 'a'])
+                .toArray(Character[]::new);
+                
+
