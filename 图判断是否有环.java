@@ -87,7 +87,7 @@ class Solution {
 }
 
 
-// leetcode 802
+// leetcode 802 Find Eventual Safe States
 // DFS 
 class Solution {
     public List<Integer> eventualSafeNodes(int[][] graph) {
