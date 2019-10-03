@@ -39,8 +39,8 @@ public class Solution {
                 
                 char tempc = s.charAt(begin);//***be careful here: choose the char at begin pointer, NOT the end pointer
                 if(map.containsKey(tempc)){
+		    if(map.get(tempc) == 0) counter++;//modify the counter according the requirement(different condition).
                     map.put(tempc, map.get(tempc) + 1);//plus or minus one
-                    if(map.get(tempc) > 0) counter++;//modify the counter according the requirement(different condition).
                 }
                 
                 /* save / update(min/max) the result if find a target*/
@@ -354,8 +354,8 @@ class Solution {
             while (count==0){
                 char sch=s2.charAt(start);
                 if (map.containsKey(sch)){
+                    if (map.get(sch)==0) count++;   
                     map.put(sch,map.get(sch)+1);
-                    if (map.get(sch)>0) count++;   
                 }
                 if(end-start==s1.length()) return true;
                 start++;
