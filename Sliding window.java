@@ -274,7 +274,7 @@ public class Solution {
 Longest Substring with At Most K Distinct Characters
 https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters
 
-    public int lengthOfLongestSubstringKDistinct(String s, int k) {
+   public int lengthOfLongestSubstringKDistinct(String s, int k) {
         if (s == null || s.isEmpty()) return 0;
         int maxLen = 0, left = 0, right = 0, counter = 0;
         Map<Character, Integer> map = new HashMap<>();
@@ -287,8 +287,8 @@ https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characte
         		map.put(tmp, map.get(tmp) - 1);
         		if (map.get(tmp) == 0) {
         			map.remove(tmp);
-        			counter--;
         		}
+                        if (map.size() == k) counter--;
         		left++;
         	}
         	maxLen = Math.max(maxLen, right - left);
