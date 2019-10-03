@@ -161,10 +161,10 @@ public class Solution {
             end++;
             while(counter > 2){
                 char cTemp = s.charAt(start);
-                map.put(cTemp, map.get(cTemp) - 1);
-                if(map.get(cTemp) == 0){
+                if(map.get(cTemp) == 1){
                     counter--;
                 }
+                map.put(cTemp, map.get(cTemp) - 1);
                 start++;
             }
             len = Math.max(len, end-start);
