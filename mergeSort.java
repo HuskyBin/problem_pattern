@@ -90,6 +90,63 @@ private int reversePairsSub(int[] nums, int l, int r) {
 }
 
 
+327: Count Range of Sum
+class Solution {
+    public int countRangeSum(int[] nums, int lower, int upper) {
+        if (nums == null) {
+            return 0;
+        }
+        long[] sum = new long[nums.length + 1];
+        for (int i = 0; i < nums.length; i++) {
+            sum[i + 1] = sum[i] + nums[i];
+        }
+        
+        return mergeCore(sum, 0, sum.length - 1, lower, upper);
+    }
+    
+    private int mergeCore(long[] sum, int start, int end, int lower, int upper) {
+        if (start >= end) {
+            return 0;
+        }
+        
+        int mid = start + (end - start) / 2;
+        
+        int count = mergeCore(sum, start, mid, lower, upper) + mergeCore(sum, mid + 1, end, lower, upper);
+        
+        long[] arr = new long[end - start + 1];
+        
+        int i = start;
+        int j = mid + 1;
+        
+        int k = mid + 1;
+        
+        int arrIndex = 0;
+        int secondIndex = mid + 1;
+        while (i <= mid) {
+            while (j <= end && sum[j] - sum[i] < lower) {
+                j++;
+            }
+            while (k <= end && sum[k] - sum[i] <= upper) {
+                k++;
+            }
+            count += k - j;
+            
+            while (secondIndex <= end && sum[secondIndex] < sum[i]) {
+                arr[arrIndex++] = sum[secondIndex++];
+            }
+            
+            arr[arrIndex++] = sum[i++];
+        }
+        
+        while (secondIndex <= end) {
+            arr[arrIndex++] = sum[secondIndex++];
+        }
+        
+        System.arraycopy(arr, 0, sum, start, arr.length);
+        return count;
+    }
+}
+
 https://leetcode.com/problems/count-of-smaller-numbers-after-self/discuss/138154/The-C%2B%2B-merge-sort-template-for-pairs-'i'-'j'-problem
 
 Merge Sort
