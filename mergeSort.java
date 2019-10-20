@@ -1,3 +1,95 @@
+315： Count Of Smaller Numbers After Self
+
+public class Solution {
+    
+    public List<Integer> countSmaller(int[] nums) {
+        int len = (nums == null? 0 : nums.length);
+        
+        int[] idxs = new int[len];
+        int[] count = new int[len];
+        
+        for (int i = 0; i < len; i++) idxs[i] = i;
+        
+        mergeSort(nums, idxs, 0, len, count);
+        
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        for (int i : count) list.add(i);
+        
+        return list;
+    }
+    
+    private void mergeSort(int[] nums, int[] idxs, int start, int end, int[] count) {
+        if (start + 1 >= end) return;
+        
+        int mid = (end - start) / 2 + start;
+        mergeSort(nums, idxs, start, mid, count);
+        mergeSort(nums, idxs, mid, end, count);
+        
+        merge(nums, idxs, start, end, count);
+    }
+    
+    private void merge(int[] nums, int[] idxs, int start, int end, int[] count) {
+        int mid = (end - start) / 2 + start;
+        
+        int[] tmp = new int[end - start];
+        int[] tmpidx = new int[end - start];
+        int i = start, j = mid, k = 0;
+        while (k < end - start) {
+            if (i < mid) {
+                if (j < end && nums[j] < nums[i]) {
+                    tmpidx[k] = idxs[j];
+                    tmp[k++] = nums[j++];
+                } else {
+                    count[idxs[i]] += j - mid; // add those already counted
+                    tmpidx[k] = idxs[i];
+                    tmp[k++] = nums[i++];
+                }
+                
+            } else {
+                tmpidx[k] = idxs[j];
+                tmp[k++] = nums[j++];
+            }
+        }
+        
+        System.arraycopy(tmpidx, 0, idxs, start, end - start);
+        System.arraycopy(tmp, 0, nums, start, end - start);
+    }
+}
+
+
+439: Reverse Pairs:
+
+class Solution {
+public int reversePairs(int[] nums) {
+    return reversePairsSub(nums, 0, nums.length - 1);
+}
+    
+private int reversePairsSub(int[] nums, int l, int r) {
+    if (l >= r) return 0;
+        
+    int m = l + ((r - l) >> 1);
+    int res = reversePairsSub(nums, l, m) + reversePairsSub(nums, m + 1, r);
+        
+    int i = l, j = m + 1, k = 0, p = m + 1;
+    int[] merge = new int[r - l + 1];
+        
+    while (i <= m) {
+        while (p <= r && nums[i] > 2L * nums[p]) p++;
+        res += p - (m + 1);
+				
+        while (j <= r && nums[i] >= nums[j]) merge[k++] = nums[j++];
+        merge[k++] = nums[i++];
+    }
+        
+    while (j <= r) merge[k++] = nums[j++];
+        
+    System.arraycopy(merge, 0, nums, l, merge.length);
+        
+    return res;
+}
+}
+
+
 https://leetcode.com/problems/count-of-smaller-numbers-after-self/discuss/138154/The-C%2B%2B-merge-sort-template-for-pairs-'i'-'j'-problem
 
 Merge Sort
