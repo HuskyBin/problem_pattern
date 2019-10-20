@@ -3,7 +3,7 @@ public class Solution {
         if (nums == null || nums.length == 0) {
             return Integer.MIN_VALUE;
         }       
-        int result = findKthLargestCore(nums, 0, nums.length - 1, nums.length - k + 1);
+        int result = findKthLargestCore(nums, 0, nums.length - 1, nums.length - k);
         return result;
     }
 
@@ -24,10 +24,10 @@ public class Solution {
         }
         swap(nums, left, end);
 
-        if (k == left + 1) {
+        if (k == left) {
             return pivot;
         }
-        else if (k < left + 1) {
+        else if (k < left) {
             return findKthLargestCore(nums, start, left - 1, k);
         }
         else {
