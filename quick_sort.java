@@ -1,43 +1,28 @@
 public class Solution {
     public int findKthLargest(int[] nums, int k) {
-        if (nums == null || nums.length == 0) {
-            return Integer.MIN_VALUE;
-        }       
-        int result = findKthLargestCore(nums, 0, nums.length - 1, nums.length - k);
-        return result;
+        int start = 0, end = nums.length - 1, index = nums.length - k;
+        while (start < end) {
+            int pivot = partion(nums, start, end);
+            if (pivot < index) start = pivot + 1; 
+            else if (pivot > index) end = pivot - 1;
+            else return nums[pivot];
+        }
+        return nums[start];
     }
-
-    private int findKthLargestCore(int[] nums, int start, int end, int k) {
-        int left = start;
-        int right = end;
-        int pivot = nums[end];
-
-        while (left != right) {
-            while (nums[left] < pivot && left < right) {
-                left++;
-            }
-            while (nums[right] >= pivot && left < right) {
-                right--;
-            }
-
-            swap(nums, left, right);
+    
+    private int partion(int[] nums, int start, int end) {
+        int pivot = start, temp;
+        while (start <= end) {
+            while (start <= end && nums[start] <= nums[pivot]) start++;
+            while (start <= end && nums[end] > nums[pivot]) end--;
+            if (start > end) break;
+            temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
         }
-        swap(nums, left, end);
-
-        if (k == left) {
-            return pivot;
-        }
-        else if (k < left) {
-            return findKthLargestCore(nums, start, left - 1, k);
-        }
-        else {
-            return findKthLargestCore(nums, left + 1, end, k);
-        }
-    }
-
-    public void swap(int[] nums, int aIndex, int bIndex) {
-        int temp = nums[aIndex];
-        nums[aIndex] = nums[bIndex];
-        nums[bIndex] = temp;
+        temp = nums[end];
+        nums[end] = nums[pivot];
+        nums[pivot] = temp;
+        return end;
     }
 }
