@@ -14,12 +14,7 @@ public int ladderLength(String beginWord, String endWord, List<String> words) {
 	
 	beginSet.add(beginWord);
 	endSet.add(endWord);
-	while (!beginSet.isEmpty() && !endSet.isEmpty()) {
-		if (beginSet.size() > endSet.size()) {
-			Set<String> set = beginSet;
-			beginSet = endSet;
-			endSet = set;
-		}
+	while (!beginSet.isEmpty()) {
 
 		Set<String> temp = new HashSet<String>();
 		for (String word : beginSet) {
@@ -43,7 +38,8 @@ public int ladderLength(String beginWord, String endWord, List<String> words) {
 			}
 		}
 
-		beginSet = temp;
+		beginSet = endSet;
+                endSet = tmp;
 		len++;
 	}
 	
